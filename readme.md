@@ -18,25 +18,6 @@
   - 修改管理员密码
   - 默认账号：`admin` / `123456`（首次运行自动创建，**请立即修改密码**）
 
-## 项目结构
-
-hotel_product_app/
-├── app.py                  # 主程序
-├── schema.sql              # 数据库结构
-├── database.db             # 运行后自动生成（无需手动创建）
-├── static/
-│   ├── uploads/            # 上传的图片存放目录（需手动修改权限）
-│   └── css/
-│       └── style.css       # Discord 风格 CSS
-└── templates/              # HTML 模板
-    ├── login.html
-    ├── products.html
-    ├── order.html
-    ├── admin.html
-    ├── edit_product.html
-    └── change_password.html
-
-
 ## 安装与运行
 
 ### 1. 环境准备
