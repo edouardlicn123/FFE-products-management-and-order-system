@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>{% if product %}编辑{% else %}添加{% endif %}产品</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>{% if product %}编辑产品{% else %}添加新产品{% endif %}</h1>
+            <div class="sub">
+                <a href="{{ url_for('admin') }}" style="color:var(--acc);">返回管理列表</a>
+            </div>
+        </header>
+
+        <div class="form">
+            <form method="post" enctype="multipart/form-data">
+                <label>型号（唯一）<span style="color:var(--red);"> *</span></label>
+                <input type="text" name="model" value="{{ product.model if product else '' }}" required>
+
+                <label>产品品类 <span style="color:var(--red);">*</span></label>
+                <select name="category" required style="width:100%; padding:14px; background:#2c2f33; border:none; border-radius:8px; color:white; font-size:1rem;">
+                    {% for cat in categories %}
+                        <option value="{{ cat }}" {% if product and product.category == cat %}selected{% endif %}>{{ cat }}</option>
+                    {% endfor %}
+                </select>
+
+                <label>介绍说明</label>
+                <textarea name="description" rows="6" style="width:100%; padding:14px; background:#2c2f33; border:none; border-radius:8px; color:white; font-size:1rem;">{{ product.description if product else '' }}</textarea>
+
+                <label>长 (mm)</label>
+                <input type="number" name="length" value="{{ product.length if product else '' }}">
+
+                <label>宽 (mm)</label>
+                <input type="number" name="width" value="{{ product.width if product else '' }}">
+
+                <label>高 (mm)</label>
+                <input type="number" name="height" value="{{ product.height if product else '' }}">
+
+                <label>座高 (mm)</label>
+                <input type="number" name="seat_height" value="{{ product.seat_height if product else '' }}">
+
+                <label>上传图片（最多10张，支持多选，可追加）</label>
+                <input type="file" name="images" multiple accept="image/*">
+                <div style="color:var(--mute); margin-top:8px;">
+                    当前已上传：{{ (product.images.split(',')|length) if product and product.images else 0 }} / 10 张
+                </div>
+
+                {% if product and product.images %}
+                <div style="background:#2c2f33; padding:16px; border-radius:8px; margin-top:20px; border-left:4px solid var(--yellow);">
+                    <strong style="color:var(--yellow);">现有图片（不会被删除）</strong>
+                    <div style="display:flex; flex-wrap:wrap; gap:10px; margin-top:12px;">
+                        {% for img in product.images.split(',') %}
+                            <img src="{{ url_for('static', filename='uploads/' ~ img) }}" style="width:150px; border-radius:6px;">
+                        {% endfor %}
+                    </div>
+                </div>
+                {% endif %}
+
+                <button type="submit">
+                    {% if product %}保存修改{% else %}添加产品{% endif %}
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+</html>

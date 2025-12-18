@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>FFE产品展示</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>FFE产品展示</h1>
+            <div class="sub">浏览所有酒店常用产品</div>
+        </header>
+
+        <div style="padding:24px; text-align:center;">
+            <form method="get" style="display:inline-block; margin:0 20px 12px 0;">
+                <select name="category" onchange="this.form.submit()" style="padding:12px 16px; background:#2c2f33; color:white; border:none; border-radius:8px; min-width:260px; font-size:1rem;">
+                    <option value="">全部品类</option>
+                    <optgroup label="家具类">
+                        <option value="床及床头板" {% if selected_category == '床及床头板' %}selected{% endif %}>床及床头板</option>
+                        <option value="床垫" {% if selected_category == '床垫' %}selected{% endif %}>床垫</option>
+                        <option value="床头柜" {% if selected_category == '床头柜' %}selected{% endif %}>床头柜</option>
+                        <option value="衣柜" {% if selected_category == '衣柜' %}selected{% endif %}>衣柜</option>
+                        <option value="电视柜" {% if selected_category == '电视柜' %}selected{% endif %}>电视柜</option>
+                        <option value="书写桌/化妆台" {% if selected_category == '书写桌/化妆台' %}selected{% endif %}>书写桌/化妆台</option>
+                        <option value="休闲椅/沙发椅" {% if selected_category == '休闲椅/沙发椅' %}selected{% endif %}>休闲椅/沙发椅</option>
+                        <option value="沙发（单人/双人/三人）" {% if selected_category == '沙发（单人/双人/三人）' %}selected{% endif %}>沙发</option>
+                        <option value="茶几/边几" {% if selected_category == '茶几/边几' %}selected{% endif %}>茶几/边几</option>
+                        <option value="行李柜/行李架" {% if selected_category == '行李柜/行李架' %}selected{% endif %}>行李柜/行李架</option>
+                        <option value="迷你吧柜" {% if selected_category == '迷你吧柜' %}selected{% endif %}>迷你吧柜</option>
+                        <option value="全身镜/穿衣镜" {% if selected_category == '全身镜/穿衣镜' %}selected{% endif %}>全身镜/穿衣镜</option>
+                        <option value="餐桌/餐椅" {% if selected_category == '餐桌/餐椅' %}selected{% endif %}>餐桌/餐椅</option>
+                        <option value="会议桌/会议椅" {% if selected_category == '会议桌/会议椅' %}selected{% endif %}>会议桌/会议椅</option>
+                        <option value="吧台/吧椅" {% if selected_category == '吧台/吧椅' %}selected{% endif %}>吧台/吧椅</option>
+                        <option value="户外家具" {% if selected_category == '户外家具' %}selected{% endif %}>户外家具</option>
+                    </optgroup>
+                    <optgroup label="灯具类">
+                        <option value="吸顶灯" {% if selected_category == '吸顶灯' %}selected{% endif %}>吸顶灯</option>
+                        <option value="吊灯" {% if selected_category == '吊灯' %}selected{% endif %}>吊灯</option>
+                        <option value="壁灯" {% if selected_category == '壁灯' %}selected{% endif %}>壁灯</option>
+                        <option value="床头灯" {% if selected_category == '床头灯' %}selected{% endif %}>床头灯</option>
+                        <option value="落地灯" {% if selected_category == '落地灯' %}selected{% endif %}>落地灯</option>
+                        <option value="台灯" {% if selected_category == '台灯' %}selected{% endif %}>台灯</option>
+                        <option value="镜前灯" {% if selected_category == '镜前灯' %}selected{% endif %}>镜前灯</option>
+                        <option value="氛围灯/装饰灯" {% if selected_category == '氛围灯/装饰灯' %}selected{% endif %}>氛围灯/装饰灯</option>
+                        <option value="户外灯具" {% if selected_category == '户外灯具' %}selected{% endif %}>户外灯具</option>
+                    </optgroup>
+                    <optgroup label="洁具类">
+                        <option value="马桶" {% if selected_category == '马桶' %}selected{% endif %}>马桶</option>
+                        <option value="面盆/洗手盆" {% if selected_category == '面盆/洗手盆' %}selected{% endif %}>面盆/洗手盆</option>
+                        <option value="浴缸" {% if selected_category == '浴缸' %}selected{% endif %}>浴缸</option>
+                        <option value="淋浴花洒" {% if selected_category == '淋浴花洒' %}selected{% endif %}>淋浴花洒</option>
+                        <option value="浴室配件（毛巾架/置物架等）" {% if selected_category == '浴室配件（毛巾架/置物架等）' %}selected{% endif %}>浴室配件</option>
+                        <option value="水龙头" {% if selected_category == '水龙头' %}selected{% endif %}>水龙头</option>
+                    </optgroup>
+                    <optgroup label="门类">
+                        <option value="客房门" {% if selected_category == '客房门' %}selected{% endif %}>客房门</option>
+                        <option value="卫生间门" {% if selected_category == '卫生间门' %}selected{% endif %}>卫生间门</option>
+                        <option value="衣柜门" {% if selected_category == '衣柜门' %}selected{% endif %}>衣柜门</option>
+                        <option value="阳台门" {% if selected_category == '阳台门' %}selected{% endif %}>阳台门</option>
+                        <option value="防火门" {% if selected_category == '防火门' %}selected{% endif %}>防火门</option>
+                    </optgroup>
+                    <optgroup label="其他类">
+                        <option value="窗帘/纱帘" {% if selected_category == '窗帘/纱帘' %}selected{% endif %}>窗帘/纱帘</option>
+                        <option value="地毯" {% if selected_category == '地毯' %}selected{% endif %}>地毯</option>
+                        <option value="装饰画/挂画" {% if selected_category == '装饰画/挂画' %}selected{% endif %}>装饰画/挂画</option>
+                        <option value="绿植/装饰植物" {% if selected_category == '绿植/装饰植物' %}selected{% endif %}>绿植/装饰植物</option>
+                        <option value="保险箱" {% if selected_category == '保险箱' %}selected{% endif %}>保险箱</option>
+                        <option value="其他" {% if selected_category == '其他' %}selected{% endif %}>其他</option>
+                    </optgroup>
+                </select>
+            </form>
+
+            <div style="margin-top:12px;">
+                <a href="{{ url_for('order_page') }}{% if selected_category %}?category={{ selected_category }}{% endif %}">
+                    <button style="width:auto; display:inline-block;">生成订单</button>
+                </a>
+                &nbsp;&nbsp;
+                <a href="{{ url_for('login') }}" style="color:var(--acc);">管理员登录</a>
+            </div>
+        </div>
+
+        <div style="padding:0 24px 24px;">
+            {% if products|length == 0 %}
+                <div style="text-align:center; padding:60px; color:var(--mute); font-size:1.2rem;">
+                    {% if selected_category %}该品类暂无产品{% else %}暂无产品，请由管理员添加{% endif %}
+                </div>
+            {% else %}
+                {% for p in products %}
+                <div style="background:var(--side); border-radius:12px; padding:20px; margin-bottom:20px;">
+                    <div style="display:inline-block; background:var(--acc); color:white; padding:6px 14px; border-radius:20px; font-size:0.9rem;">
+                        {{ p.category }}
+                    </div>
+                    <h2 style="color:white; display:inline-block; margin-left:12px; vertical-align:middle;">{{ p.model }}</h2>
+
+                    {% if p.images %}
+                        <div style="display:flex; flex-wrap:wrap; gap:10px; margin:16px 0;">
+                            {% for img in p.images.split(',') %}
+                                <img src="{{ url_for('static', filename='uploads/' ~ img) }}" style="width:200px; height:auto; border-radius:8px; object-fit:cover;">
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <table style="margin:12px 0; width:100%;">
+                        <tr><th>长 (mm)</th><td>{{ p.length or '-' }}</td></tr>
+                        <tr><th>宽 (mm)</th><td>{{ p.width or '-' }}</td></tr>
+                        <tr><th>高 (mm)</th><td>{{ p.height or '-' }}</td></tr>
+                        <tr><th>座高 (mm)</th><td>{{ p.seat_height or '-' }}</td></tr>
+                    </table>
+
+                    {% if p.description %}
+                        <p style="margin-top:16px; line-height:1.7; opacity:0.95;">{{ p.description }}</p>
+                    {% endif %}
+                </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>

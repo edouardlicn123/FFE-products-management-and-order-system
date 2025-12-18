@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>家具管理后台</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>产品管理后台</h1>
+            <div class="sub">
+                欢迎，{{ current_user.username }} &nbsp;|&nbsp; 
+                <a href="{{ url_for('change_password') }}" style="color:var(--yellow);">修改密码</a> &nbsp;|&nbsp;
+                <a href="{{ url_for('logout') }}" style="color:var(--red);">退出登录</a> &nbsp;|&nbsp; 
+                <a href="{{ url_for('index') }}" style="color:var(--acc);">访客首页</a>
+            </div>
+        </header>
+
+        <div style="padding:24px; text-align:center;">
+            <a href="{{ url_for('edit_product') }}"><button style="width:auto; display:inline-block; background:var(--green);">添加新产品</button></a>
+        </div>
+
+        <div style="padding:0 24px 24px;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>品类</th>
+                        <th>型号</th>
+                        <th>图片</th>
+                        <th>尺寸 (长×宽×高)</th>
+                        <th>座高</th>
+                        <th>介绍（前50字）</th>
+                        <th>操作</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% if products|length == 0 %}
+                    <tr>
+                        <td colspan="8" style="text-align:center; padding:40px; color:var(--mute);">暂无产品，请点击上方添加</td>
+                    </tr>
+                    {% else %}
+                    {% for p in products %}
+                    <tr>
+                        <td>{{ p.id }}</td>
+                        <td>
+                            <span style="background:var(--acc); padding:5px 12px; border-radius:12px; font-size:0.9rem;">{{ p.category }}</span>
+                        </td>
+                        <td>{{ p.model }}</td>
+                        <td>
+                            {% if p.images %}
+                                {% set imgs = p.images.split(',') %}
+                                {% for img in imgs[:3] %}
+                                    <img src="{{ url_for('static', filename='uploads/' ~ img) }}" style="width:80px; border-radius:4px; margin:2px;">
+                                {% endfor %}
+                                {% if imgs|length > 3 %}
+                                    <span style="color:var(--mute);">...共{{ imgs|length }}张</span>
+                                {% endif %}
+                            {% else %}
+                                <span style="color:var(--mute);">无</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ p.length or '' }} × {{ p.width or '' }} × {{ p.height or '' }}</td>
+                        <td>{{ p.seat_height or '' }}</td>
+                        <td>{{ p.description[:50] }}{% if p.description|length > 50 %}...{% endif %}</td>
+                        <td>
+                            <a href="{{ url_for('edit_product', pid=p.id) }}" style="color:var(--acc);">编辑</a> &nbsp;
+                            <a href="{{ url_for('delete_product', pid=p.id) }}" 
+                               onclick="return confirm('确定删除「{{ p.model }}」吗？');" 
+                               style="color:var(--red);">删除</a>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                    {% endif %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>
+</html>

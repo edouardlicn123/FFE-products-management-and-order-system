@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>生成订单</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>生成订单</h1>
+            <div class="sub">选择需要的家具及数量</div>
+        </header>
+
+        <div class="form">
+            <form method="post" action="{{ url_for('generate_order') }}">
+                {% if products|length == 0 %}
+                    <p style="text-align:center; color:var(--mute);">暂无可选家具</p>
+                {% else %}
+                    {% for p in products %}
+                    <div style="background:var(--side); border-radius:8px; padding:20px; margin-bottom:20px;">
+                        <h2 style="color:white;">{{ p.model }}</h2>
+
+                        {% if p.images %}
+                            <div style="display:flex; flex-wrap:wrap; gap:8px; margin:12px 0;">
+                                {% for img in p.images.split(',') %}
+                                    <img src="{{ url_for('static', filename='uploads/' ~ img) }}" style="width:120px; height:auto; border-radius:6px;">
+                                {% endfor %}
+                            </div>
+                        {% endif %}
+
+                        <table style="margin:12px 0;">
+                            <tr><th>长</th><td>{{ p.length or '-' }} mm</td></tr>
+                            <tr><th>宽</th><td>{{ p.width or '-' }} mm</td></tr>
+                            <tr><th>高</th><td>{{ p.height or '-' }} mm</td></tr>
+                            <tr><th>座高</th><td>{{ p.seat_height or '-' }} mm</td></tr>
+                        </table>
+
+                        {% if p.description %}
+                            <p style="margin:12px 0; opacity:0.9;">{{ p.description }}</p>
+                        {% endif %}
+
+                        <label>数量</label>
+                        <input type="number" name="qty_{{ p.id }}" min="0" value="0" style="width:100%;">
+
+                        <label>补充说明</label>
+                        <input type="text" name="supplement_{{ p.id }}" placeholder="可选：颜色、材质要求等">
+                    </div>
+                    {% endfor %}
+                {% endif %}
+
+                <button type="submit" {% if products|length == 0 %}disabled{% endif %}>
+                    下载订单 CSV
+                </button>
+            </form>
+
+            <div style="text-align:center; margin-top:20px;">
+                <a href="{{ url_for('index') }}" style="color:var(--acc);">返回产品列表</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

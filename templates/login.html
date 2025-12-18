@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <title>管理员登录</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>酒店FFE产品管理及订单生成系统</h1>
+            <div class="sub">管理员登录</div>
+        </header>
+
+        <div class="form">
+            <form method="post">
+                <label>用户名</label>
+                <input type="text" name="username" value="admin" required autofocus>
+
+                <label>密码</label>
+                <input type="password" name="password" value="" required>
+
+                <button type="submit">登录</button>
+            </form>
+
+            <div style="text-align:center; margin-top:20px;">
+                <a href="{{ url_for('index') }}" style="color:var(--acc);">返回访客首页</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
